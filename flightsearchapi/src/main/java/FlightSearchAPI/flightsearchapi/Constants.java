@@ -16,14 +16,14 @@ public class Constants {
     public static final Map<Long, Airport> CACHED_AIRPORTS = new HashMap<>();
 
     static {
-        PREDEFINED_AIRPORTS.add(new Airport("Hatay Havalimanı"));
-        PREDEFINED_AIRPORTS.add(new Airport("Adana Havalimanı"));
-        PREDEFINED_AIRPORTS.add(new Airport("Sabiha Gökçen Havalimanı"));
-        PREDEFINED_AIRPORTS.add(new Airport("İstanbul Havalimanı"));
-        PREDEFINED_AIRPORTS.add(new Airport("İzmir Havalimanı"));
-        PREDEFINED_AIRPORTS.add(new Airport("Esenboğa Havalimanı"));
-        PREDEFINED_AIRPORTS.add(new Airport("Malatya Havalimanı"));
-        PREDEFINED_AIRPORTS.add(new Airport("Frankfurt Havalimanı"));
-        PREDEFINED_AIRPORTS.add(new Airport("Köln Havalimanı"));
+        PREDEFINED_AIRPORTS.add(new Airport("Hatay"));
+        PREDEFINED_AIRPORTS.add(new Airport("Adana"));
+        PREDEFINED_AIRPORTS.add(new Airport("Mugla"));
+        PREDEFINED_AIRPORTS.add(new Airport("İstanbul"));
+        PREDEFINED_AIRPORTS.add(new Airport("İzmir"));
+        PREDEFINED_AIRPORTS.add(new Airport("Ankara"));
+        PREDEFINED_AIRPORTS.add(new Airport("Malatya"));
+        PREDEFINED_AIRPORTS.add(new Airport("Frankfurt"));
+        PREDEFINED_AIRPORTS.add(new Airport("Köln"));
     }
 }

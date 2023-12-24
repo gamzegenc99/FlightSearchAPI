@@ -24,13 +24,14 @@ public class FlightSearchController {
     public String health() {
         return "true";
     }
+    
 
     @GetMapping("/search")
     public List<Flight> searchFlights(@RequestParam String departureCity,
             @RequestParam String arrivalCity,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime departureDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime returnDate) {
-        // Uçuşları arama ve liste alma işlemleri buraya eklenecek
+        // Flights search list
         if (returnDate == null) {
             // one way flights
             return flightService.searchOneWayFlights(departureCity, arrivalCity, departureDate);
