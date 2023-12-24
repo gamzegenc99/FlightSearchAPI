@@ -8,6 +8,7 @@ import FlightSearchAPI.flightsearchapi.entity.Flight;
 import FlightSearchAPI.flightsearchapi.repository.FlightRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -44,29 +45,24 @@ public class FlightService {
         flightRepository.deleteById(id);
     }
 
-    //One -way flight search
     public List<Flight> searchOneWayFlights(String departureCity, String arrivalCity, LocalDateTime departureDate) {
-        List<Flight> allFlights = getAllFlights();
+        LocalDateTime departureDayStart = departureDate.toLocalDate().atStartOfDay(); // start of the departure day
+        LocalDateTime departureDayEnd = departureDate.toLocalDate().atTime(23, 59, 59); // end of the departure day
+
+        return flightRepository.findByDepartureAirportCityAndArrivalAirportCityAndDepartureDateTimeBetween(
+                departureCity, arrivalCity, departureDayStart, departureDayEnd);
+    }
+
+    public List<Flight> searchRoundTripFlights(String departureCity, String arrivalCity, LocalDateTime departureDate, LocalDateTime returnDate) {
+        LocalDateTime departureDayStart = departureDate.toLocalDate().atStartOfDay(); // start of the departure day
+        LocalDateTime departureDayEnd = departureDate.toLocalDate().atTime(23, 59, 59); // end of the departure day
+        LocalDateTime returnDayStart = returnDate.toLocalDate().atStartOfDay(); // start of the return day
+        LocalDateTime returnDayEnd = returnDate.toLocalDate().atTime(23, 59, 59); // end of the return day
+
         List<Flight> foundFlights = new ArrayList<>();
-        for (Flight flight : allFlights) {
-            if (flight.getDepartureAirport().getCity().contains(departureCity)
-                    && flight.getArrivalAirport().getCity().contains(arrivalCity)) {
-                foundFlights.add(flight);
-            }
-        }
+        foundFlights.addAll(flightRepository.findByDepartureAirportCityAndArrivalAirportCityAndDepartureDateTimeBetween(departureCity, arrivalCity, departureDayStart, departureDayEnd));
+        foundFlights.addAll(flightRepository.findByDepartureAirportCityAndArrivalAirportCityAndDepartureDateTimeBetween(arrivalCity, departureCity, returnDayStart, returnDayEnd));
         return foundFlights;
     }
 
-    //Round-Trip flight search
-    public List<Flight> searchRoundTripFlights(String departureCity, String arrivalCity, LocalDateTime departureDate, LocalDateTime returnDate) {
-        List<Flight> allFlights = getAllFlights();
-        List<Flight> foundFlights = new ArrayList<>();
-        for (Flight flight : allFlights) {
-            if (flight.getDepartureAirport().getCity().contains(departureCity)
-                    && flight.getArrivalAirport().getCity().contains(arrivalCity)) {
-                foundFlights.add(flight);
-            }
-        }
-        return foundFlights;
-    }
 }
